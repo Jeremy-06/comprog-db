@@ -49,3 +49,12 @@ Location = CASE dept_id
     ELSE 'Unknown'
 END;
 
+--left join 
+SELECT Employee.first_name, Employee.last_name, Department.dept_name, Department.building
+FROM Employee
+LEFT JOIN Department ON Employee.dept_id = Department.dept_id;
+
+--right join
+SELECT Employee.first_name, Employee.last_name, Department.dept_name, Department.building
+FROM Employee
+RIGHT JOIN Department ON Employee.dept_id = Department.dept_id;
