@@ -58,3 +58,9 @@ LEFT JOIN Department ON Employee.dept_id = Department.dept_id;
 SELECT Employee.first_name, Employee.last_name, Department.dept_name, Department.building
 FROM Employee
 RIGHT JOIN Department ON Employee.dept_id = Department.dept_id;
+
+--full outer join
+SELECT Employee.first_name, Employee.last_name, Department.dept_name, Department.building
+FROM Employee
+FULL OUTER JOIN Department ON Employee.dept_id = Department.dept_id;
+
