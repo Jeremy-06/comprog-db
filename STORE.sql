@@ -7,3 +7,6 @@
 -- size
 -- color
 
+SELECT * FROM RONSTORE;
+SELECT * FROM AVAILABLE_SIZES;
+
