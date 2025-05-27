@@ -94,3 +94,5 @@ TRUNCATE TABLE
 DROP TABLE
 
 ALTER TABLE Employee RENAME COLUMN Location to location;
+
+
