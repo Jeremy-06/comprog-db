@@ -64,3 +64,33 @@ SELECT Employee.first_name, Employee.last_name, Department.dept_name, Department
 FROM Employee
 FULL OUTER JOIN Department ON Employee.dept_id = Department.dept_id;
 
+ALTER TABLE Employee ADD Birthday DATE;
+ALTER TABLE Employee DROP COLUMN Birthday;
+
+ALTER TABLE Employee ADD date_hired DATE;
+
+UPDATE Employee SET 
+date_hired = CASE id
+    WHEN 1 THEN '2025-03-22'
+    WHEN 2 THEN '2020-01-01'
+    WHEN 3 THEN '2020-01-02'
+    WHEN 4 THEN '2021-02-15'
+    WHEN 5 THEN '2021-02-16'
+    WHEN 6 THEN '2020-06-06'
+    WHEN 7 THEN '2024-12-25'
+    WHEN 8 THEN '2022-11-22'
+    WHEN 9 THEN '2023-10-23'
+    WHEN 10 THEN '2023-07-12'
+ELSE NULL
+END;
+
+DELETE FROM Employee WHERE id = 2;
+DELETE FROM Employee WHERE id IN (1, 2, 3);
+
+INSERT INTO Employee (id, first_name, last_name, age, brgy, city, salary, dept_id, Location, date_hired)
+VALUES (2, 'Lexes Bj', 'Acuesta', 19, 'Brgy-201', 'Pasay City', 60000, 3, 'building_3', '2020-03-04');
+
+TRUNCATE TABLE
+DROP TABLE
+
+ALTER TABLE Employee RENAME COLUMN Location to location;
