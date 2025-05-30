@@ -38,4 +38,3 @@ INSERT INTO Flowers (flower_id, flower_name, category, supplier, price_per_stem,
 
 SELECT * FROM Flowers;
 
-ALTER TABLE
