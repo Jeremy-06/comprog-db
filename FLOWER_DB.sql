@@ -103,6 +103,8 @@ WHERE flower_id IN (6, 8);
 
 SELECT flower_name, seller FROM Flowers;
 
+-- AND OR NOT (OPERATORS)
+
 SELECT * FROM Flowers
 WHERE supplier = 'Philippine Cut Flower Corporation' AND seller = 'Balmond';
 
@@ -111,3 +113,9 @@ WHERE supplier = 'Dangwa Flower Market' OR seller = 'Balmond';
 
 SELECT flower_name, seller, supplier, price_per_stem FROM Flowers
 WHERE NOT seller = 'Balmond';
+
+SELECT seller, flower_name, price_per_stem FROM Flowers
+ORDER BY seller;
+
+SELECT category, flower_name, price_per_stem FROM Flowers
+ORDER BY category DESC;
