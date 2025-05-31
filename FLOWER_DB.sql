@@ -83,3 +83,16 @@ ELSE NULL
 END;
 
 SELECT flower_id, flower_name, seller FROM Flowers;
+
+UPDATE Flowers SET 
+supplier = CASE category
+    WHEN 'Cut Flower' THEN 'Philippine Cut Flower Corporation'
+    WHEN 'Premium Flower' THEN 'Dangwa Flower Market'
+    WHEN 'Tropical Flower' THEN 'Heaven Scent Flowers And Farms'
+    WHEN 'Premium Flower' THEN 'Heaven Scent Flowers And Farms'
+    WHEN 'Filler Flower' THEN 'Dangwa Flower Market'
+    WHEN 'Imported Flower' THEN 'Philippine Cut Flower Corporation'
+ELSE NULL
+END;
+
+SELECT flower_name, supplier FROM Flowers;
