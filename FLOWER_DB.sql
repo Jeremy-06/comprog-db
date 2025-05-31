@@ -169,3 +169,10 @@ HAVING COUNT(flower_id) <> 0;
 SELECT category, COUNT(flower_name) AS flower_count FROM Flowers
 GROUP BY category
 HAVING COUNT(flower_name) >= 1;
+
+-- ALTER TABLE
+
+ALTER TABLE Inventory DROP COLUMN notes;
+ALTER TABLE Inventory ADD note VARCHAR(100);
+
+SELECT * FROM Inventory;
