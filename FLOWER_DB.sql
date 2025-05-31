@@ -38,3 +38,27 @@ INSERT INTO Flowers (flower_id, flower_name, category, supplier, price_per_stem,
 
 SELECT * FROM Flowers;
 
+INSERT INTO Inventory (inventory_id, flower_id, quantity, last_restock, notes) VALUES
+(1, 1, 200, '2025-05-29', NULL),
+(2, 2, 60, '2025-04-30', NULL),
+(3, 3, 80, '2025-05-15', NULL),
+(4, 4, 150, '2025-05-28', NULL),
+(5, 5, 220, '2025-05-29', NULL),
+(6, 6, 115, '2025-05-29', NULL),
+(7, 7, 90, '2025-05-20', NULL),
+(8, 8, 95, '2025-05-27', NULL),
+(9, 9, 75, '2025-05-18', NULL),
+(10, 10, 45, '2025-05-15', NULL),
+(11, 11, 85, '2025-05-26', NULL),
+(12, 12, 60, '2025-04-29', NULL),
+(13, 13, 65, '2025-05-27', NULL),
+(14, 14, 50, '2025-04-25', NULL),
+(15, 15, 95, '2025-05-29', NULL);
+
+SELECT * FROM Flowers;
+SELECT * FROM Inventory;
+
+SELECT Flowers.flower_id, Flowers.flower_name, Inventory.quantity
+FROM Flowers
+INNER JOIN Inventory ON Flowers.flower_id = Inventory.flower_id;
+
