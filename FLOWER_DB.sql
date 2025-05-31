@@ -61,4 +61,3 @@ SELECT * FROM Inventory;
 SELECT Flowers.flower_id, Flowers.flower_name, Inventory.quantity
 FROM Flowers
 INNER JOIN Inventory ON Flowers.flower_id = Inventory.flower_id;
-
