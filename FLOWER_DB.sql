@@ -153,3 +153,19 @@ WHERE price_per_stem NOT BETWEEN 80 AND 100;
 SELECT * FROM Flowers
 WHERE price_per_stem BETWEEN 50 AND 100
 AND category IN ('cut flower', 'imported flower');
+
+-- GRPUP BY HAVING
+
+SELECT category, COUNT(flower_name) AS flower_count FROM Flowers
+GROUP BY category;
+
+SELECT supplier, COUNT(flower_id) flower_count FROM Flowers
+GROUP BY supplier;
+
+SELECT supplier, COUNT(flower_id) flower_count FROM Flowers
+GROUP BY supplier
+HAVING COUNT(flower_id) <> 0;
+
+SELECT category, COUNT(flower_name) AS flower_count FROM Flowers
+GROUP BY category
+HAVING COUNT(flower_name) >= 1;
