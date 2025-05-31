@@ -133,3 +133,23 @@ SELECT SUM(price_per_stem) AS total_price FROM  Flowers;
 SELECT COUNT(flower_name) AS count FROM  Flowers;
 SELECT COUNT(flower_name) AS balmond_flower FROM  Flowers
 WHERE seller = 'Balmond';
+
+-- LIKE WILDCARDS
+
+SELECT * FROM Flowers
+WHERE supplier LIKE 'Phil%';
+
+SELECT flower_name, seller, price_per_stem FROM Flowers
+WHERE seller LIKE 'Les___';
+
+-- BETWEEN IN NOT BETWEEN
+
+SELECT * FROM Flowers
+WHERE price_per_stem BETWEEN 50 AND 100;
+
+SELECT flower_name, category, seller, price_per_stem FROM Flowers
+WHERE price_per_stem NOT BETWEEN 80 AND 100;
+
+SELECT * FROM Flowers
+WHERE price_per_stem BETWEEN 50 AND 100
+AND category IN ('cut flower', 'imported flower');
