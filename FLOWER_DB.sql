@@ -102,3 +102,12 @@ seller = 'Lunox'
 WHERE flower_id IN (6, 8);
 
 SELECT flower_name, seller FROM Flowers;
+
+SELECT * FROM Flowers
+WHERE supplier = 'Philippine Cut Flower Corporation' AND seller = 'Balmond';
+
+SELECT flower_name, seller, supplier, price_per_stem FROM Flowers
+WHERE supplier = 'Dangwa Flower Market' OR seller = 'Balmond';
+
+SELECT flower_name, seller, supplier, price_per_stem FROM Flowers
+WHERE NOT seller = 'Balmond';
