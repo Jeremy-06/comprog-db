@@ -114,8 +114,22 @@ WHERE supplier = 'Dangwa Flower Market' OR seller = 'Balmond';
 SELECT flower_name, seller, supplier, price_per_stem FROM Flowers
 WHERE NOT seller = 'Balmond';
 
+-- ORDER BY
+
 SELECT seller, flower_name, price_per_stem FROM Flowers
 ORDER BY seller;
 
 SELECT category, flower_name, price_per_stem FROM Flowers
 ORDER BY category DESC;
+
+-- MIN MAX COUNT AVG SUM
+
+SELECT MAX(price_per_stem) AS maximum FROM  Flowers;
+SELECT MIN(price_per_stem) AS minimum FROM  Flowers;
+
+SELECT AVG(price_per_stem) AS average_price FROM  Flowers;
+SELECT SUM(price_per_stem) AS total_price FROM  Flowers;
+
+SELECT COUNT(flower_name) AS count FROM  Flowers;
+SELECT COUNT(flower_name) AS balmond_flower FROM  Flowers
+WHERE seller = 'Balmond';
