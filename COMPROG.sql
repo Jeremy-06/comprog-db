@@ -95,4 +95,45 @@ DROP TABLE
 
 ALTER TABLE Employee RENAME COLUMN Location to location;
 
+SELECT * FROM Employee;
+--13th month pay - dec
+--mid year bonus -  may
+--overtime
+--deduction of absent and late
+--1 loan
+
+CREATE TABLE pay ( 
+	id INT NOT NULL,
+	p_id INT PRIMARY KEY NOT NULL,
+	overtime INT,
+	day_absent INT,
+	day_late INT,
+	loan_amount DECIMAL(10, 2),
+	deductions DECIMAL(10, 2),
+	net_pay DECIMAL(10, 2),
+	monthpay13 DECIMAL(10, 2),
+	FOREIGN KEY (id) REFERENCES Employee(id)
+);
+
+INSERT INTO pay(id, p_id, overtime, day_absent, day_late, loan_amount, deductions, net_pay, monthpay13)
+VALUES
+	(1, 1, 8, 0, 1, 5000, 6000, 30000, 20000),
+	(2, 2, 2, 0, 2, 6000, 5000, 25000, 15000),
+    (3, 3, 4, 0, 4, 3000, 3000, 15000, 10000),
+    (4, 4, 2, 1, 1, 2000, 2000, 20000, 15000),
+    (5, 5, 0, 3, 2, 6000, 5000, 22000, 12000),
+    (6, 6, 0, 2, 3, 2000, 3000, 10000, 6000),
+    (7, 7, 0, 0, 6, 5000, 2000, 25000, 15000),
+    (8, 8, 2, 1, 2, 1000, 4000, 20000, 17000),
+    (9, 9, 1, 2, 1, 7000, 1000, 10000, 8000),
+    (10, 10, 5, 0, 5, 3000, 4000, 20000, 11000);
+
+SELECT * FROM pay;
+
+SELECT Employee.id, last_name, salary, overtime, day_absent, day_late, loan_amount, deductions, net_pay, monthpay13
+FROM Employee
+INNER JOIN pay ON pay.id = Employee.id
+WHERE overtime < 5;
+
+	
 
