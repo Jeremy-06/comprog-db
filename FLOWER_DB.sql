@@ -179,7 +179,34 @@ SELECT * FROM Inventory;
 
 --TOP + AGGRE
 
-SELECT TOP 5 category, SUM(price_per_stem) AS blabla 
+SELECT TOP 10 category, AVG(price_per_stem) AS blabla 
 FROM Flowers
 GROUP BY category
 ORDER BY blabla DESC;
+
+-- SUBQUERY
+
+SELECT * FROM Flowers
+WHERE price_per_stem > (SELECT AVG(price_per_stem) FROM Flowers);
+
+SELECT * FROM Flowers
+WHERE flower_id IN (SELECT flower_id FROM Inventory);
+
+SELECT flower_name,
+  (SELECT COUNT(*) FROM Inventory WHERE Inventory.flower_id = Flowers.flower_id) AS inventory_count
+FROM Flowers;
+
+SELECT flower_id, quantity FROM Inventory
+WHERE quantity > (SELECT AVG(quantity) FROM Inventory);
+
+SELECT * FROM Inventory
+WHERE quantity = (SELECT MAX(quantity) FROM Inventory);
+
+SELECT * FROM Flowers
+WHERE flower_id NOT IN (SELECT flower_id FROM Inventory);
+
+SELECT flower_id, avg_quantity FROM (
+  SELECT flower_id, AVG(quantity) AS avg_quantity FROM Inventory
+  GROUP BY flower_id
+) AS avg_inv
+WHERE avg_quantity > 10;
