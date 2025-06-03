@@ -130,10 +130,8 @@ VALUES
 
 SELECT * FROM pay;
 
-SELECT Employee.id, last_name, salary, overtime, day_absent, day_late, loan_amount, deductions, net_pay, monthpay13
-FROM Employee
-INNER JOIN pay ON pay.id = Employee.id
-WHERE overtime < 5;
+
+
 
 	
 

@@ -55,7 +55,7 @@ INSERT INTO Inventory (inventory_id, flower_id, quantity, last_restock, notes) V
 (14, 14, 50, '2025-04-25', NULL),
 (15, 15, 95, '2025-05-29', NULL);
 
-SELECT * FROM Flowers;
+SELECT TOP 5 * FROM Flowers ORDER BY price_per_stem DESC;
 SELECT * FROM Inventory;
 
 SELECT Flowers.flower_id, Flowers.flower_name, Inventory.quantity
@@ -176,3 +176,10 @@ ALTER TABLE Inventory DROP COLUMN notes;
 ALTER TABLE Inventory ADD note VARCHAR(100);
 
 SELECT * FROM Inventory;
+
+--TOP + AGGRE
+
+SELECT TOP 5 category, SUM(price_per_stem) AS blabla 
+FROM Flowers
+GROUP BY category
+ORDER BY blabla DESC;
