@@ -184,6 +184,26 @@ FROM Flowers
 GROUP BY category
 ORDER BY blabla DESC;
 
+SELECT TOP 3 seller, AVG(price_per_stem) AS mmm 
+FROM Flowers
+GROUP BY seller
+ORDER BY mmm DESC;
+
+SELECT TOP 3 seller, SUM(price_per_stem) AS benta 
+FROM Flowers
+GROUP BY seller
+ORDER BY benta DESC;
+
+SELECT TOP 3 seller, COUNT(flower_id) AS total_flowers 
+FROM Flowers
+GROUP BY seller
+ORDER BY total_flowers DESC;
+
+SELECT TOP 1 supplier, COUNT(flower_id) AS total_flowers 
+FROM Flowers
+GROUP BY supplier
+ORDER BY total_flowers DESC;
+
 -- SUBQUERY
 
 SELECT * FROM Flowers
@@ -210,3 +230,5 @@ SELECT flower_id, avg_quantity FROM (
   GROUP BY flower_id
 ) AS avg_inv
 WHERE avg_quantity > 10;
+
+
