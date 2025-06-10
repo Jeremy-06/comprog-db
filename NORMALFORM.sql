@@ -106,3 +106,30 @@ GROUP BY Course;
 SELECT * FROM CourseBCNF;
 
 DROP TABLE CourseInstructor3NF;
+
+-- 4NF: Remove Multivalued Dependencies
+
+-- StudentCourse table
+CREATE TABLE StudentCourse (
+    StudentID INT,
+    Course VARCHAR(100),
+    PRIMARY KEY (StudentID, Course)
+);
+
+-- StudentClub table
+CREATE TABLE StudentClub4NF (
+    StudentID INT,
+    Club VARCHAR(100),
+    PRIMARY KEY (StudentID, Club)
+);
+
+-- Insert sample data
+INSERT INTO StudentCourse VALUES (1, 'Math');
+INSERT INTO StudentCourse VALUES (1, 'Physics');
+
+-- Migrate (assuming you have club data)
+INSERT INTO StudentClub4NF VALUES (1, 'Chess');
+INSERT INTO StudentClub4NF VALUES (1, 'Drama');
+
+SELECT * FROM StudentCourse;
+SELECT * FROM StudentClub4NF;
