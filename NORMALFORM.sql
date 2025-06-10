@@ -90,3 +90,19 @@ SELECT * FROM StudentEnrollment3NF;
 
 DROP TABLE Enrollment2NF;
 
+-- BCNF: Remove All Anomalies
+
+CREATE TABLE CourseBCNF (
+    Course VARCHAR(100) PRIMARY KEY,
+    Instructor VARCHAR(100)
+);
+
+-- Migrate:
+INSERT INTO CourseBCNF
+SELECT Course, MIN(Instructor) -- or other aggregate function if duplicates
+FROM CourseInstructor3NF
+GROUP BY Course;
+
+SELECT * FROM CourseBCNF;
+
+DROP TABLE CourseInstructor3NF;
