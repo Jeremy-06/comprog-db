@@ -61,3 +61,32 @@ SELECT * FROM Enrollment2NF;
 
 DROP TABLE StudentCourses1NF;
 
+-- 3NF: Remove Transitive Dependencies
+
+-- CourseInstructor table (Course, Instructor)
+CREATE TABLE CourseInstructor3NF (
+    Course VARCHAR(100),
+    Instructor VARCHAR(100),
+    PRIMARY KEY (Course, Instructor)
+);
+
+-- Populate CourseInstructor3NF
+INSERT INTO CourseInstructor3NF
+SELECT DISTINCT Course, Instructor FROM Enrollment2NF;
+
+-- StudentEnrollment table (StudentID, Course)
+CREATE TABLE StudentEnrollment3NF (
+    StudentID INT,
+    Course VARCHAR(100),
+    PRIMARY KEY (StudentID, Course)
+);
+
+-- Populate StudentEnrollment3NF
+INSERT INTO StudentEnrollment3NF
+SELECT DISTINCT StudentID, Course FROM Enrollment2NF;
+
+SELECT * FROM CourseInstructor3NF;
+SELECT * FROM StudentEnrollment3NF;
+
+DROP TABLE Enrollment2NF;
+
