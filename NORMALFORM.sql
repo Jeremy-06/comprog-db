@@ -133,3 +133,44 @@ INSERT INTO StudentClub4NF VALUES (1, 'Drama');
 
 SELECT * FROM StudentCourse;
 SELECT * FROM StudentClub4NF;
+
+-- Fifth Normal Form (5NF)
+
+-- StudentCourse table
+CREATE TABLE StudentCourse5NF (
+    StudentID INT,
+    Course VARCHAR(100),
+    PRIMARY KEY (StudentID, Course)
+);
+
+CREATE TABLE CourseInstructor5NF (
+    Course VARCHAR(100),
+    Instructor VARCHAR(100),
+    PRIMARY KEY (Course, Instructor)
+);
+
+CREATE TABLE StudentInstructor5NF (
+    StudentID INT,
+    Instructor VARCHAR(100),
+    PRIMARY KEY (StudentID, Instructor)
+);
+
+
+-- From the previous tables, or if you can infer:
+INSERT INTO StudentCourse5NF VALUES (1, 'Math');
+INSERT INTO StudentCourse5NF VALUES (1, 'Physics');
+INSERT INTO StudentCourse5NF VALUES (2, 'Math');
+INSERT INTO StudentCourse5NF VALUES (2, 'Chemistry');
+
+INSERT INTO CourseInstructor5NF VALUES ('Math', 'Dr. Smith');
+INSERT INTO CourseInstructor5NF VALUES ('Physics', 'Dr. Lee');
+INSERT INTO CourseInstructor5NF VALUES ('Chemistry', 'Dr. Kumar');
+
+INSERT INTO StudentInstructor5NF VALUES (1, 'Dr. Smith');
+INSERT INTO StudentInstructor5NF VALUES (1, 'Dr. Lee');
+INSERT INTO StudentInstructor5NF VALUES (2, 'Dr. Smith');
+INSERT INTO StudentInstructor5NF VALUES (2, 'Dr. Kumar');
+
+SELECT * FROM StudentCourse5NF;
+SELECT * FROM CourseInstructor5NF;
+SELECT * FROM StudentInstructor5NF;
