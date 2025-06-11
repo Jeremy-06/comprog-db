@@ -85,6 +85,7 @@ CREATE TABLE StudentEnrollment3NF (
 INSERT INTO StudentEnrollment3NF
 SELECT DISTINCT StudentID, Course FROM Enrollment2NF;
 
+SELECT * FROM Student2NF;
 SELECT * FROM CourseInstructor3NF;
 SELECT * FROM StudentEnrollment3NF;
 
@@ -103,6 +104,8 @@ SELECT Course, MIN(Instructor) -- or other aggregate function if duplicates
 FROM CourseInstructor3NF
 GROUP BY Course;
 
+SELECT * FROM Student2NF;
+SELECT * FROM StudentEnrollment3NF;
 SELECT * FROM CourseBCNF;
 
 DROP TABLE CourseInstructor3NF;
