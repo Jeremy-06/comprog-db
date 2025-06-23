@@ -56,3 +56,81 @@ SELECT * FROM color;
 SELECT * FROM customers;
 SELECT * FROM orders;
 SELECT * FROM order_items;
+
+-- INSERTING PRODUCTS
+
+Sandugo BCHS20 Outdoor Flipflops - 349
+Sandugo Denali Outdoor Flipflops - 396
+Sandugo Romelo Flipflops - 385
+Sandugo Tapulao V2 Adventure Flipflops - 625
+Sandugo Tapulao V3 Adventure Flipflops - 649
+Sandugo Daraitan Flipflops - 399
+Sandugo Kanlaon Adventure Flipflops - 625
+Sandugo Mayon Adventure Flipflops - 549
+Sandugo Sagada Flipflops - 659
+Sandugo Sinai Adventure Sandals - 795
+Sandugo SD1201 Sandals - 795
+Sandugo Casili Sandals - 799
+
+INSERT INTO products (product_name, price, description) VALUES
+('Sandugo BCHS20 Outdoor Flipflops', 349, NULL),
+('Sandugo Denali Outdoor Flipflops', 396, NULL),
+('Sandugo Romelo Flipflops', 385, NULL),
+('Sandugo Tapulao V2 Adventure Flipflops', 625, NULL),
+('Sandugo Tapulao V3 Adventure Flipflops', 649, NULL),
+('Sandugo Daraitan Flipflops', 399, NULL),
+('Sandugo Kanlaon Adventure Flipflops', 625, NULL),
+('Sandugo Mayon Adventure Flipflops', 549, NULL),
+('Sandugo Sagada Flipflops', 659, NULL),
+('Sandugo Sinai Adventure Sandals', 795, NULL),
+('Sandugo SD1201 Sandals', 795, NULL),
+('Sandugo Casili Sandals', 799, NULL);
+
+-- COLORS
+
+Black
+Blue
+Brown
+Gray
+Green
+Khaki
+Maroon
+Rasta
+Red
+Teal
+Black-White
+Black/Gray
+Black Yellow
+Blue/Gray
+Blue Yellow
+Maroon Gray
+Red Yellow
+
+INSERT INTO color (color_name) VALUES
+('Black'),
+('Blue'),
+('Brown'),
+('Gray'),
+('Green'),
+('Khaki'),
+('Maroon'),
+('Rasta'),
+('Red'),
+('Teal'),
+('Black-White'),
+('Black/Gray'),
+('Black Yellow'),
+('Blue/Gray'),
+('Blue Yellow'),
+('Maroon Gray'),
+('Red Yellow');
+
+INSERT INTO sizes (size_label) VALUES
+('5'),
+('6'),
+('7'),
+('8'),
+('9'),
+('10'),
+('11'),
+('12');
