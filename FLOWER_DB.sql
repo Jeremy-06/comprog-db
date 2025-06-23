@@ -232,3 +232,4 @@ SELECT flower_id, avg_quantity FROM (
 WHERE avg_quantity > 10;
 
 
+
