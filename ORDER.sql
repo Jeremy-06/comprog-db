@@ -55,7 +55,9 @@ SELECT * FROM sizes;
 SELECT * FROM color;
 SELECT * FROM customers;
 SELECT * FROM orders;
-SELECT * FROM order_items;
+--SELECT * FROM order_items;
+SELECT * FROM cart;
+SELECT * FROM users;
 
 -- INSERTING PRODUCTS
 
@@ -134,3 +136,65 @@ INSERT INTO sizes (size_label) VALUES
 ('10'),
 ('11'),
 ('12');
+
+CREATE TABLE cart (
+    cart_id INT PRIMARY KEY IDENTITY(1,1),
+    customer_id INT NOT NULL,
+    product_id INT NOT NULL,
+    size_id INT NOT NULL,
+    color_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (size_id) REFERENCES sizes(size_id),
+    FOREIGN KEY (color_id) REFERENCES color(color_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+SELECT 
+    p.product_name AS ITEMS,
+    s.size_label AS SIZES,
+    co.color_name AS COLORS,
+    c.quantity AS QUANTITY,
+    c.price AS PRICE
+FROM cart c
+JOIN products p ON c.product_id = p.product_id
+JOIN sizes s ON c.size_id = s.size_id
+JOIN color co ON c.color_id = co.color_id;
+
+-- Insert customers before inserting into cart to satisfy foreign key constraints
+INSERT INTO customers (first_name, last_name, email, phone, address) VALUES
+('John', 'Doe', 'john.doe@example.com', '1234567890', '123 Main St'),
+('Jane', 'Smith', 'jane.smith@example.com', '0987654321', '456 Oak Ave'),
+('Alice', 'Johnson', 'alice.johnson@example.com', '5551234567', '789 Pine Rd');
+
+INSERT INTO cart (customer_id, product_id, size_id, color_id, quantity, price) VALUES
+(1, 1, 1, 1, 2, 349.00),
+(1, 2, 2, 2, 1, 396.00),
+(1, 3, 3, 3, 3, 385.00),
+(2, 4, 4, 4, 1, 625.00),
+(2, 5, 5, 5, 2, 649.00),
+(3, 6, 6, 6, 1, 399.00);
+
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY IDENTITY(1,1),
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'customer'))
+);
+
+INSERT INTO users (username, password, role) VALUES
+('admin', 'admin123', 'admin'),
+('customer1', 'customer123', 'customer'),
+('customer2', 'customer456', 'customer');
+
+DELETE FROM cart;
+DELETE FROM sizes;
+
+-- Reseed the identity value for sizes table to start at 5
+DBCC CHECKIDENT ('sizes', RESEED, 4);
+
+ALTER TABLE users
+ADD customer_id INT NULL
+    CONSTRAINT FK_users_customers FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
