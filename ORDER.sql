@@ -1,6 +1,6 @@
-CREATE DATABASE walkwalkSlippers;
+CREATE DATABASE rjflipflops;
 
-USE walkwalkSlippers;
+USE rjflipflops;
 
 CREATE TABLE products (
     product_id INT PRIMARY KEY IDENTITY(1,1),
@@ -14,18 +14,26 @@ CREATE TABLE sizes (
     size_label VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE color (
+CREATE TABLE colors (
     color_id INT PRIMARY KEY IDENTITY(1,1),
     color_name VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE users (
+    user_id INT PRIMARY KEY IDENTITY(1,1),
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY IDENTITY(1,1),
+    user_id INT NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone VARCHAR(20),
-    address VARCHAR(255) NOT NULL
+    address VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE orders (
@@ -36,6 +44,19 @@ CREATE TABLE orders (
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
 
+CREATE TABLE cart (
+    cart_id INT PRIMARY KEY IDENTITY(1,1),
+    customer_id INT NOT NULL,
+    product_id INT NOT NULL,
+    size_id INT NOT NULL,
+    color_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (size_id) REFERENCES sizes(size_id),
+    FOREIGN KEY (color_id) REFERENCES colors(color_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
 CREATE TABLE order_items (
     order_item_id INT PRIMARY KEY IDENTITY(1,1),
     order_id INT NOT NULL,
@@ -52,12 +73,13 @@ CREATE TABLE order_items (
 
 SELECT * FROM products;
 SELECT * FROM sizes;
-SELECT * FROM color;
+SELECT * FROM colors;
 SELECT * FROM customers;
 SELECT * FROM orders;
---SELECT * FROM order_items;
 SELECT * FROM cart;
 SELECT * FROM users;
+SELECT * FROM customers;
+--SELECT * FROM order_items;
 
 -- INSERTING PRODUCTS
 
@@ -108,7 +130,7 @@ Blue Yellow
 Maroon Gray
 Red Yellow
 
-INSERT INTO color (color_name) VALUES
+INSERT INTO colors (color_name) VALUES
 ('Black'),
 ('Blue'),
 ('Brown'),
@@ -137,19 +159,7 @@ INSERT INTO sizes (size_label) VALUES
 ('11'),
 ('12');
 
-CREATE TABLE cart (
-    cart_id INT PRIMARY KEY IDENTITY(1,1),
-    customer_id INT NOT NULL,
-    product_id INT NOT NULL,
-    size_id INT NOT NULL,
-    color_id INT NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(product_id),
-    FOREIGN KEY (size_id) REFERENCES sizes(size_id),
-    FOREIGN KEY (color_id) REFERENCES color(color_id),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
-);
+
 
 SELECT 
     p.product_name AS ITEMS,
@@ -160,34 +170,13 @@ SELECT
 FROM cart c
 JOIN products p ON c.product_id = p.product_id
 JOIN sizes s ON c.size_id = s.size_id
-JOIN color co ON c.color_id = co.color_id;
+JOIN colors co ON c.color_id = co.color_id;
 
 -- Insert customers before inserting into cart to satisfy foreign key constraints
-INSERT INTO customers (first_name, last_name, email, phone, address) VALUES
-('John', 'Doe', 'john.doe@example.com', '1234567890', '123 Main St'),
-('Jane', 'Smith', 'jane.smith@example.com', '0987654321', '456 Oak Ave'),
-('Alice', 'Johnson', 'alice.johnson@example.com', '5551234567', '789 Pine Rd');
-
-INSERT INTO cart (customer_id, product_id, size_id, color_id, quantity, price) VALUES
-(1, 1, 1, 1, 2, 349.00),
-(1, 2, 2, 2, 1, 396.00),
-(1, 3, 3, 3, 3, 385.00),
-(2, 4, 4, 4, 1, 625.00),
-(2, 5, 5, 5, 2, 649.00),
-(3, 6, 6, 6, 1, 399.00);
+INSERT INTO customers (user_id, first_name, last_name, email, phone, address) VALUES
+(1, 'jeremy', 'primavera', '@gmail.com', '1234567890', 'taguig');
 
 
-CREATE TABLE users (
-    user_id INT PRIMARY KEY IDENTITY(1,1),
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'customer'))
-);
-
-INSERT INTO users (username, password, role) VALUES
-('admin', 'admin123', 'admin'),
-('customer1', 'customer123', 'customer'),
-('customer2', 'customer456', 'customer');
 
 DELETE FROM cart;
 DELETE FROM sizes;
@@ -196,5 +185,80 @@ DELETE FROM sizes;
 DBCC CHECKIDENT ('sizes', RESEED, 4);
 
 ALTER TABLE users
-ADD customer_id INT NULL
+ADD customer_id INT NOT NULL
     CONSTRAINT FK_users_customers FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
+    -- Update existing users to have a valid customer_id before enforcing NOT NULL
+    UPDATE users SET customer_id = 1 WHERE user_id = 1;
+    UPDATE users SET customer_id = 2 WHERE user_id = 2;
+    UPDATE users SET customer_id = 4 WHERE user_id = 4;
+
+    ALTER TABLE users
+    ALTER COLUMN customer_id INT NOT NULL;
+
+
+
+-- SQL Queries for WalkWalkSlippers Database
+    -- 1. List products that are more expensive than the average price
+    SELECT * FROM products
+    WHERE price > (SELECT AVG(price) FROM products);
+
+    -- 2. Find customers who have items in their cart
+    SELECT * FROM customers
+    WHERE customer_id IN (SELECT DISTINCT customer_id FROM cart);
+
+    -- 3. Get the names of products that are in any cart
+    SELECT product_name FROM products
+    WHERE product_id IN (SELECT product_id FROM cart);
+
+    -- 4. Show orders with a total amount greater than the highest cart price
+    SELECT * FROM orders
+    WHERE total_amount > (SELECT MAX(price) FROM cart);
+
+    -- 5. List customers who have never placed an order
+    SELECT * FROM customers
+    WHERE customer_id NOT IN (SELECT customer_id FROM orders);
+
+    -- 6. Find the product(s) with the highest price
+    SELECT * FROM products
+    WHERE price = (SELECT MAX(price) FROM products);
+
+    -- 7. Get the color(s) used in the most cart items
+    SELECT * FROM color
+    WHERE color_id IN (
+        SELECT TOP 1 color_id
+        FROM cart
+        GROUP BY color_id
+        ORDER BY COUNT(*) DESC
+    );
+
+    -- 8. List users who are also customers with at least one order
+    SELECT * FROM users
+    WHERE customer_id IN (SELECT customer_id FROM orders);
+
+    -- 9. Show sizes that are not used in any cart
+    SELECT * FROM sizes
+    WHERE size_id NOT IN (SELECT size_id FROM cart);
+
+    -- 10. Find customers who have ordered products costing more than 600
+    SELECT * FROM customers
+    WHERE customer_id IN (
+        SELECT o.customer_id
+        FROM orders o
+        JOIN order_items oi ON o.order_id = oi.order_id
+        WHERE oi.price > 600
+    );
+
+    ALTER TABLE customers
+    ADD user_id INT UNIQUE NOT NULL,
+        CONSTRAINT FK_customers_users FOREIGN KEY (user_id) REFERENCES users(user_id);
+
+    DELETE FROM customers;
+    DELETE FROM users;
+
+    SELECT c.customer_id FROM users u 
+INNER JOIN customers c ON u.user_id = c.user_id 
+WHERE u.username = 'jeremyyy' AND u.password = '143';
+
+INSERT INTO cart (customer_id, product_id, size_id, color_id, quantity, price) VALUES
+(4, 1, 1, 1, 1, 349.00);
