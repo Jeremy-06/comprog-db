@@ -198,3 +198,5 @@ ADD customer_id INT NOT NULL
 
 INSERT INTO cart (customer_id, product_id, size_id, color_id, quantity, price) VALUES
 (4, 1, 1, 1, 1, 349.00);
+
+
